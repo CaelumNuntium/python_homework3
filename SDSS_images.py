@@ -1,5 +1,4 @@
 import argparse
-import traceback
 import urllib.request
 options_help = """
 List of Drawing Options:
