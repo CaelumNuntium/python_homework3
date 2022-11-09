@@ -1,4 +1,5 @@
 import argparse
+import traceback
 import urllib.request
 options_help = """
 List of Drawing Options:
@@ -22,4 +23,8 @@ parser.add_argument("-o", "--output", action="store", default="output.jpg", help
 parser.add_argument("--options", action="store", default="", help="options string, a set of upper-case characters")
 args = parser.parse_args()
 url = "http://skyserver.sdss.org/dr16/SkyServerWS/ImgCutout/getjpeg?ra=" + args.ra + "&dec=" + args.dec + "&scale=" + args.scale + "&width=" + args.size[0] + "&height=" + args.size[1] + "&opt=" + args.options
-urllib.request.urlretrieve(url, args.output)
+try:
+    urllib.request.urlretrieve(url, args.output)
+except urllib.error.HTTPError as ex:
+    print("SDSS SkyServer cannot answer your request!")
+    print(ex)
